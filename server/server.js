@@ -84,7 +84,7 @@ app.delete('/todos/:id', (req, res) => {
         if(!todo) {
             return res.status(404).send('There is no todo with the specified ID');
         }
-        res.send(todo);
+        res.send({todo});
     }).catch((e) => {
         return res.status(400).send(e);
     }); 
