@@ -37,18 +37,16 @@ app.post('/todos', (req, res) => {
 });
 
 app.post('/users', (req, res) => {
-    console.log('User route', req.body.text);
-    var user = new User({
-        email: req.body.email
-    });
+    var user = new User(_.pick(req.body,['email', 'password']));
 
-    user.save().then((doc) => {
-        res.send(doc);
-    }, (e) => {
-        res.status(400).send(e);
+    user.save().then(() => {
+        return user.generateAuthToken();
+    }).then((token) => {
+        res.header('x-auth', token).send(user);
+    }).catch((e) => {
+        res.send(e);
     });
 });
-
 
 app.get('/todos', (req, res) => {
     Todo.find().then((todos) => {
@@ -56,10 +54,7 @@ app.get('/todos', (req, res) => {
     }, e => {
         res.status(400).send(e);
     });
-})
-
-//to get a todo by id
-
+});
 app.get('/todos/:id', (req, res) => {
     var userId = req.params.id;
     if(!ObjectID.isValid(userId)) {
@@ -76,7 +71,6 @@ app.get('/todos/:id', (req, res) => {
         res.status(404).send();
     });
 });
-
 app.delete('/todos/:id', (req, res) => {
     var id = req.params.id;
     if(!ObjectID.isValid(id)) {
