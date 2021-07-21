@@ -23,8 +23,8 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
     res.send({
         name: 'Akinbode'
-    })
-})
+    });
+});
 app.post('/todos', (req, res) => {
     var todo = new Todo({
         text: req.body.text
