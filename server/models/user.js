@@ -7,8 +7,8 @@ const bcrypt = require('bcryptjs');
 var UserSchema = new mongoose.Schema({
     email: {
         type: String,
-        minlength: 1,
-        require: true,
+        minlength: 5,
+        required: true,
         unique: true,
         validate: {
             validator: validator.isEmail,
@@ -17,7 +17,7 @@ var UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        require: true,
+        required: true,
         minLength: 6
     },
     tokens: [{
@@ -44,7 +44,8 @@ UserSchema.pre('save', function (next) {
     } else{
         next();
     }
-})
+});
+
 UserSchema.methods.toJSON = function() {
     var user = this;
     var userObject = user.toObject();
