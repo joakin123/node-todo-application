@@ -9,7 +9,6 @@ const bcrypt = require('bcryptjs');
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
-var {ObjectId} = require('mongodb');
 var {authenticate} = require('./middleware/authenticate');
 
 

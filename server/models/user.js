@@ -18,7 +18,7 @@ var UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minLength: 6
+        minLength: 3
     },
     tokens: [{
        access: {
@@ -48,7 +48,7 @@ UserSchema.statics.findByCredentials = function (email, password) {
                 };
             });
         });
-    })
+    });
 };
 UserSchema.pre('save', function (next) {
     var user = this;
@@ -85,7 +85,6 @@ UserSchema.methods.generateAuthToken = function() {
 UserSchema.statics.findByToken = function (token) {
     var User = this;
     var decoded;
-
     try {
         decoded = jwt.verify(token, 'abc123');
     } catch(e) {
