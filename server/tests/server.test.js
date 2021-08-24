@@ -246,7 +246,7 @@ describe('PATCH todo/:id', () => {
             })
             .end(done)
     })
-})
+});
 
 describe('GET /users/me', () => {
     it('should return users if authenticated', (done) => {
